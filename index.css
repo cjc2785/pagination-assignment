@@ -1,0 +1,21 @@
+.nav {
+    list-style-type: none;
+}
+
+.nav-item, .nav-item_selected {
+    display: inline-block;
+}
+
+.nav-item_selected {
+    background-color: #0000ff;
+    color: #fff;
+}
+
+.nav-item_btn {
+    background-color: Transparent;
+}
+
+.nav-item_selected .nav-item_btn {
+    color: #fff;
+}
+
