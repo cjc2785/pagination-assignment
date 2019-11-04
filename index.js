@@ -13,11 +13,11 @@ const generateBooks = () => {
 const getBookItem = ({
     bookId, title, authorName
 }) => `
-    <li class='list-group-item'>
-        <p>id: ${bookId}</p>
-        <p>title: ${title}</p>
-        <p>author: ${authorName}</p>
-    </li>
+    <tr>
+        <td>${bookId}</td>
+        <td>${title}</td>
+        <td>${authorName}</td>
+    </tr>
 `
 
 const getBookList = books => {
@@ -26,9 +26,18 @@ const getBookList = books => {
         .join("")
 
     return `
-        <ul class='list-group'>
-            ${bookItems}
-        </ul>
+        <table class='table table-hover'>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${bookItems}
+            </tbody>
+        </table>
     `
 }
 
