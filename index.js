@@ -13,7 +13,7 @@ const generateBooks = () => {
 const getBookItem = ({
     bookId, title, authorName
 }) => `
-    <li>
+    <li class='list-group-item'>
         <p>id: ${bookId}</p>
         <p>title: ${title}</p>
         <p>author: ${authorName}</p>
@@ -26,7 +26,7 @@ const getBookList = books => {
         .join("")
 
     return `
-        <ul>
+        <ul class='list-group'>
             ${bookItems}
         </ul>
     `
@@ -69,11 +69,13 @@ const getPageNavigator = (selected, length) => {
 
     for (i = 1; i <= length; ++i) {
 
-        const className = i === selected ? 'nav_item-selected' : 'nav_item'
+        const className = i === selected ? 'page-item active' : 'page-item'
+
+        console.log(`class: ${className}`)
 
         numberItems.push(`
-            <li class=${className}>
-                <button class='btn' onClick='onPageChange(${i})'>${i}</button>
+            <li class='${className}'>
+                <a class='page-link' href='#' onClick='onPageChange(${i})'>${i}</a>
             </li>
         `)
     }
@@ -93,12 +95,12 @@ const getPageNavigator = (selected, length) => {
     const items = [leftArrow, ...numberItems, rightArrow];
 
     return `
-        <ul class='nav'>
+        <ul class='pagination'>
             ${items.join("")}
         </ul>
     `
 }
 
-const page = `<div id='page'>${getPageContent(1)}`
+const page = `<div id='page' class='container'>${getPageContent(1)}`
 
 document.getElementById('root').innerHTML = page
