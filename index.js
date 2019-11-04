@@ -65,18 +65,32 @@ const onPageChange = num => {
 
 const getPageNavigator = (selected, length) => {
 
-    const items = []
+    const numberItems = []
 
     for (i = 1; i <= length; ++i) {
 
-        const className = i === selected ? 'nav-item_selected' : 'nav-item'
+        const className = i === selected ? 'nav_item-selected' : 'nav_item'
 
-        items.push(`
+        numberItems.push(`
             <li class=${className}>
-                <button class='nav-item_btn' onClick='onPageChange(${i})'>${i}</button>
+                <button class='btn' onClick='onPageChange(${i})'>${i}</button>
             </li>
         `)
     }
+
+    const leftArrow = `
+        <button class='btn' 
+            ${selected === 1 ?  'disabled' : ''}
+            onClick='onPageChange(${selected - 1})'><</button>
+    `
+
+    const rightArrow = `
+        <button class='btn' 
+            ${selected >= length ?  'disabled' : ''}
+            onClick='onPageChange(${selected + 1})'>></button>
+    `
+
+    const items = [leftArrow, ...numberItems, rightArrow];
 
     return `
         <ul class='nav'>

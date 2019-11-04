@@ -2,20 +2,24 @@
     list-style-type: none;
 }
 
-.nav-item, .nav-item_selected {
+.nav_item, .nav_item-selected {
     display: inline-block;
 }
 
-.nav-item_selected {
+.nav_item-selected {
     background-color: #0000ff;
     color: #fff;
 }
 
-.nav-item_btn {
+.btn {
     background-color: Transparent;
 }
 
-.nav-item_selected .nav-item_btn {
+.btn:hover {
+    cursor: pointer;
+}
+
+.nav_item-selected .btn {
     color: #fff;
 }
 
