@@ -1,28 +1,23 @@
-const generateBooks = () => {
+const rangeOf = length => {
     const result = []
-    for (i = 1; i <= 20; ++i) {
-        result.push({
-            bookId: i,
-            title: `book${i}`,
-            authorName: `author${i}`
-        })
+    for (i = 1; i <= length; ++i) {
+        result.push(i)
     }
     return result
 }
 
-const getBookItem = ({
-    bookId, title, authorName
-}) => `
-    <tr>
-        <td>${bookId}</td>
-        <td>${title}</td>
-        <td>${authorName}</td>
-    </tr>
-`
-
 const getBookList = books => {
 
-    const bookItems = books.map(getBookItem)
+    const bookItems = books
+        .map(({
+            bookId, title, authorName
+        }) => `
+            <tr>
+                <td>${bookId}</td>
+                <td>${title}</td>
+                <td>${authorName}</td>
+            </tr>
+        `)
         .join("")
 
     return `
@@ -43,73 +38,56 @@ const getBookList = books => {
 
 const getPageContent = num => {
 
-    const books = generateBooks()
+    const books = rangeOf(20)
+        .map(i => ({
+            bookId: i,
+            title: `book${i}`,
+            authorName: `author${i}`
+        })
+    )
 
     const pageCount = Math.ceil(books.length / 6)
-
     const start = (num - 1) * 6
     const end = start + 6
 
     const currentBooks = books.slice(start, end)
 
-    const bookList = getBookList(currentBooks)
-
-    const nav = getPageNavigator(num, pageCount)
-
     return `
         <div>
-            ${bookList}
-            ${nav}
+            ${getBookList(currentBooks)}
+            ${getPageNavigator(num, pageCount)}
         </div>
     `
 }
 
-const onPageChange = num => {
-
-    const page = document.getElementById('page')
-
-    page.innerHTML = getPageContent(num)
-}
-
-
 const getPageNavigator = (selected, length) => {
 
-    const numberItems = []
-
-    for (i = 1; i <= length; ++i) {
-
-        const className = i === selected ? 'page-item active' : 'page-item'
-
-        console.log(`class: ${className}`)
-
-        numberItems.push(`
-            <li class='${className}'>
+    const numberItems = rangeOf(length)
+        .map( i => `
+            <li class='${i === selected ? 'page-item active' : 'page-item'}'>
                 <a class='page-link' href='#' onClick='onPageChange(${i})'>${i}</a>
             </li>
         `)
-    }
-
-    const leftArrow = `
-        <button class='btn' 
-            ${selected === 1 ?  'disabled' : ''}
-            onClick='onPageChange(${selected - 1})'><</button>
-    `
-
-    const rightArrow = `
-        <button class='btn' 
-            ${selected >= length ?  'disabled' : ''}
-            onClick='onPageChange(${selected + 1})'>></button>
-    `
-
-    const items = [leftArrow, ...numberItems, rightArrow];
+        .join("")
 
     return `
         <ul class='pagination'>
-            ${items.join("")}
+            <button class='btn' 
+                ${selected === 1 ?  'disabled' : ''}
+                onClick='onPageChange(${selected - 1})'><</button>
+            ${numberItems}
+            <button class='btn' 
+                ${selected >= length ?  'disabled' : ''}
+                onClick='onPageChange(${selected + 1})'>></button>
         </ul>
     `
 }
 
 const page = `<div id='page' class='container'>${getPageContent(1)}`
+
+const onPageChange = num => {
+    const page = document.getElementById('page')
+    page.innerHTML = getPageContent(num)
+}
 
 document.getElementById('root').innerHTML = page
