@@ -83,7 +83,7 @@ const getPageNavigator = (selected, length) => {
     `
 }
 
-const page = `<div id='page' class='container'>${getPageContent(1)}`
+const page = `<div id='page' class='container'>${getPageContent(1)}</div>`
 
 const onPageChange = num => {
     const page = document.getElementById('page')
